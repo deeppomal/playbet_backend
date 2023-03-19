@@ -7,6 +7,7 @@ const passportSetup = require('./config/passport-setup')
 const session = require('express-session');
 const cookieSession = require('cookie-session')
 const passport = require('passport')
+const betRoutes = require('./routes/bet-routes')
 
 app.use(cookieSession({
     maxAge:24 * 60 * 60 * 1000,
@@ -31,6 +32,7 @@ db.on("open",() => console.log('connected to DB'))
 // }));
 app.use(express.json())
 app.use('/auth',authRoutes)
+app.use('/bet',betRoutes)
 
 app.get('/',(req,res) => {
     res.send('Hello mom')

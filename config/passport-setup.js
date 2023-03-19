@@ -21,27 +21,15 @@ passport.use(
         (accessToken, refreshToken, profile, done) => {
             User.findOne({googleId:profile.id}).then((currentUser)=>{
                 if(currentUser){
-                    // passport.serializeUser(function(user, done) {
-                    //     done(null, user);
-                    //   });
-                      
-                    // passport.deserializeUser(function(user, done) {
-                    //     done(null, user);
-                    // });
                     done(null,currentUser)
                 }
                 else{
                     new User({
                         googleId: profile.id,
-                        username: profile.displayName
+                        username: profile.displayName,
+                        photo:profile.photos[0].value,
+                        balance:1000
                     }).save().then((newUser) => {
-                        // passport.serializeUser(function(user, done) {
-                        //     done(null, user);
-                        //   });
-                          
-                        // passport.deserializeUser(function(user, done) {
-                        //     done(null, user);
-                        // });
                         done(null,newUser)
                     });
                 }

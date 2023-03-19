@@ -7,7 +7,8 @@ router.get('/google',passport.authenticate('google',{
 }))
 
 router.get('/logout', (req,res) => {
-
+    req.logout()
+    res.status(201).json({"message":"logged out successfully"})
 })
 
 router.get('/google/redirect',passport.authenticate('google'),
@@ -15,7 +16,7 @@ router.get('/google/redirect',passport.authenticate('google'),
 //     console.log('err',err)
 // },
 (req,res) => {
-    res.send(req.user)
+    res.status(201).json(req.user)
 })
 
 module.exports = router
