@@ -8,12 +8,14 @@ const session = require('express-session');
 const cookieSession = require('cookie-session')
 const passport = require('passport')
 const betRoutes = require('./routes/bet-routes')
+const cors = require('cors')
 
 app.use(cookieSession({
     maxAge:24 * 60 * 60 * 1000,
     keys: [process.env.COOKIE_KEY]
 }))
 
+app.use(cors())
 app.use(passport.initialize())
 app.use(passport.session())
 
