@@ -8,6 +8,7 @@ const betSchema = new Schema({
     away:String,
     betAmount:Number,
     expectedReturn:Number,
+    selectedTeam:String,
     hasWon:Boolean,
     amountWon:Number,
     oddsDetail:Array,

@@ -18,6 +18,7 @@ router.post('/add-bet', async (req, res) => {
         away:req.body.away,
         betAmount:req.body.betAmount,
         expectedReturn:req.body.expectedReturn,
+        selectedTeam:req.body.selectedTeam,
         hasWon:req.body.hasWon,
         amountWon:req.body.amountWon,
         oddsDetail:req.body.oddsDetail,
@@ -31,13 +32,17 @@ router.post('/add-bet', async (req, res) => {
     }
 })
 
-router.patch('/update-bet/:id', getBet, async (req, res) => {
-    res.bet.isResultChecked = req.body?.isResultChecked
-    res.bet.hasWon = req.body?.hasWon
-    res.bet.amountWon = req.body?.amountWon
+router.patch('/update-bet/:id', async (req, res) => {
+    let update = {
+      isResultChecked : req.body.isResultChecked,
+      hasWon : req.body.hasWon,
+      amountWon : req.body.amountWon
+    }
     try {
-      const updatedBet = await res.bet.save()
-      res.status(201).json(updatedBet)
+      const bet = await Bet.findByIdAndUpdate(req.params.id, update, {
+        new: true
+      });
+      res.status(201).json(bet);
     } catch (err) {
       res.status(400).json({ message: err.message })
     }

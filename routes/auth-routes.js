@@ -29,7 +29,17 @@ router.post('/add-user', async (req, res) => {
         }
     })
 })
-
+router.patch('/update-user/:id', async (req, res) => {
+    try{
+        const user = await User.findOneAndUpdate({'googleId':req.params.id}, {balance:req.body.balance}, {
+            new: true
+        });
+        res.status(201).json(user);
+    }
+    catch (err) {
+        return res.status(500).json({ message: err.message })
+    }
+})
 router.get('/logout', (req,res) => {
     req.logout()
     res.status(201).json({"message":"logged out successfully"})
