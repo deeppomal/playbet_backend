@@ -9,7 +9,22 @@ router.get('/get-all-bets/:userId', async (req, res) => {
       res.status(500).json({ message: err.message })
     }
 })
-
+router.get('/get-all-bets', async (req, res) => {
+  try {
+    const bets = await Bet.find()
+    res.status(201).json(bets)
+  } catch (err) {
+    res.status(500).json({ message: err.message })
+  }
+})
+router.get('/get-bet/:fixtureId', async (req, res) => {
+  try {
+    const bets = await Bet.find({'fixtureId':req.params.fixtureId})
+    res.status(201).json(bets)
+  } catch (err) {
+    res.status(500).json({ message: err.message })
+  }
+})
 router.post('/add-bet', async (req, res) => {
     const bet = new Bet({
         userId:req.body.userId,

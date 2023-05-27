@@ -9,6 +9,7 @@ const cookieSession = require('cookie-session')
 const passport = require('passport')
 const betRoutes = require('./routes/bet-routes')
 const cors = require('cors')
+const cron = require('./cron-ping');
 
 app.use(cookieSession({
     maxAge:24 * 60 * 60 * 1000,
@@ -40,4 +41,5 @@ app.get('/',(req,res) => {
     res.send('Hello mom')
 })
 
+require('./cron-ping')();
 app.listen(4000,()=>console.log('server started'))
