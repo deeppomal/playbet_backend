@@ -40,8 +40,29 @@ const checkFixtureResult = async(id) => {
 const checkIFBetWon = async (list) => {
     if(list[0].teams,list[0].fixture.status.short === 'FT'){
         let res = await fetchBet(list[0].fixture.id)
-        let isWinner = res.data[0].selectedTeam === checkWinner(list)
-        console.log(isWinner)
+        let isWinner = res.data[0].selectedTeam.toLowerCase() === checkWinner(list)
+        updateBet(res.data[0],isWinner)
+        // isWinner && updateUser(res.data[0])
+    }
+}
+const updateBet = async (bet,result) => {
+    try {
+        const response = await axios.patch('http://localhost:4000/bet/update-bet/'+bet._id, {
+            isResultChecked : true,
+            hasWon : result,
+            amountWon : result ? bet.expectedReturn : 0
+        });
+        console.log('updated bet',response.data)
+    } catch (error) {
+        console.error(error);
+    }
+}
+const updateUser = async (bet) => {
+    try {
+        const response = await axios.patch('http://localhost:4000/auth/update-user/'+bet.userId, {balance :bet.expectedReturn});
+        console.log('updated user',response.data)
+    } catch (error) {
+        console.error(error);
     }
 }
 const checkWinner = (list) => {
@@ -66,8 +87,9 @@ const fetchBet = (fixtureId) => {
         console.log('err',err)
     }
 }
+
 module.exports = () => {  
-    cron.schedule('* */10 * * * *', function() {
+    cron.schedule('*/10 * * * * *', function() {
         fetchAllBets()
     });    
 }
