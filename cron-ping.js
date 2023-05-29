@@ -19,7 +19,6 @@ const checkIfChecked = (list) => {
     const newList = list.filter( item => item.isResultChecked == false)
     newList.map(bet => checkFixtureResult(bet.fixtureId))
 }
-
 const checkFixtureResult = async(id) => {
     const options = {
         method: 'GET',
@@ -42,7 +41,7 @@ const checkIFBetWon = async (list) => {
         let res = await fetchBet(list[0].fixture.id)
         let isWinner = res.data[0].selectedTeam.toLowerCase() === checkWinner(list)
         updateBet(res.data[0],isWinner)
-        // isWinner && updateUser(res.data[0])
+        isWinner && updateUser(res.data[0])
     }
 }
 const updateBet = async (bet,result) => {
@@ -87,7 +86,6 @@ const fetchBet = (fixtureId) => {
         console.log('err',err)
     }
 }
-
 module.exports = () => {  
     cron.schedule('*/10 * * * * *', function() {
         fetchAllBets()
