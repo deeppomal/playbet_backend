@@ -51,7 +51,6 @@ const updateBet = async (bet,result) => {
             hasWon : result,
             amountWon : result ? bet.expectedReturn : 0
         });
-        console.log('updated bet',response.data)
     } catch (error) {
         console.error(error);
     }
@@ -59,7 +58,6 @@ const updateBet = async (bet,result) => {
 const updateUser = async (bet) => {
     try {
         const response = await axios.patch('http://localhost:4000/auth/update-user/'+bet.userId, {balance :bet.expectedReturn});
-        console.log('updated user',response.data)
     } catch (error) {
         console.error(error);
     }
@@ -87,7 +85,7 @@ const fetchBet = (fixtureId) => {
     }
 }
 module.exports = () => {  
-    cron.schedule('* * * * * */10', function() {
+    cron.schedule('* * */30 * * *', function() {
         fetchAllBets()
     });    
 }
