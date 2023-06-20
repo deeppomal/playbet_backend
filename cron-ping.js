@@ -74,6 +74,7 @@ const checkWinner = (list) => {
 }
 module.exports = () => {  
     cron.schedule('*/15 * * * * *', function() {
+        console.log('ran')
         fetchAllBets()
     });    
 }
