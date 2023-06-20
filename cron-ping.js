@@ -17,13 +17,13 @@ const fetchAllBets = () => {
 }
 const checkIfChecked = (list) => {
     const newList = list.filter( item => item.isResultChecked == false)
-    newList.map(bet => checkFixtureResult(bet.fixtureId))
+    newList.map(bet => checkFixtureResult(bet) )
 }
-const checkFixtureResult = async(id) => {
+const checkFixtureResult = async(bet) => {
     const options = {
         method: 'GET',
         url: 'https://api-football-v1.p.rapidapi.com/v3/fixtures',
-        params: {id: id},
+        params: {id: bet.fixtureId},
         headers: {
           'X-RapidAPI-Key': process.env.RAPID_KEY,
           'X-RapidAPI-Host': process.env.RAPID_HOST
@@ -31,17 +31,16 @@ const checkFixtureResult = async(id) => {
     };
     try {
         const response = await axios.request(options);
-        checkIFBetWon(response.data.response)
+        checkIFBetWon(response.data.response,bet)
     } catch (error) {
         console.error(error);
     }
 }
-const checkIFBetWon = async (list) => {
-    if(list[0].teams,list[0].fixture.status.short === 'FT'){
-        let res = await fetchBet(list[0].fixture.id)
-        let isWinner = res.data[0].selectedTeam.toLowerCase() === checkWinner(list)
-        updateBet(res.data[0],isWinner)
-        isWinner && updateUser(res.data[0])
+const checkIFBetWon = async (list,bet) => {
+    if(list[0].fixture.status.short === 'FT' || list[0].fixture.status.short === 'AET' || list[0].fixture.status.short === 'PEN'){
+        let isWinner = bet.selectedTeam.toLowerCase() === checkWinner(list)
+        updateBet(bet,isWinner)
+        isWinner && updateUser(bet)
     }
 }
 const updateBet = async (bet,result) => {
@@ -73,19 +72,8 @@ const checkWinner = (list) => {
         return 'draw'
     }
 }
-const fetchBet = (fixtureId) => {
-    const options = {
-        method: 'GET',
-        url: 'http://localhost:4000/bet/get-bet/'+fixtureId,
-    };
-    try{
-        return axios.request(options)
-    }catch (err){
-        console.log('err',err)
-    }
-}
 module.exports = () => {  
-    cron.schedule('* * */30 * * *', function() {
+    cron.schedule('*/15 * * * * *', function() {
         fetchAllBets()
     });    
 }
