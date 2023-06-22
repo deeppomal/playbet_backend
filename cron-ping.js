@@ -38,7 +38,7 @@ const checkFixtureResult = async(bet) => {
 }
 const checkIFBetWon = async (list,bet) => {
     if(list[0].fixture.status.short === 'FT' || list[0].fixture.status.short === 'AET' || list[0].fixture.status.short === 'PEN'){
-        let isWinner = bet.selectedTeam.toLowerCase() === checkWinner(list)
+        let isWinner = bet?.selectedTeam?.toLowerCase() === checkWinner(list)
         updateBet(bet,isWinner)
         isWinner && updateUser(bet)
     }
@@ -74,7 +74,6 @@ const checkWinner = (list) => {
 }
 module.exports = () => {  
     cron.schedule('*/15 * * * * *', function() {
-        console.log('ran')
         fetchAllBets()
     });    
 }
