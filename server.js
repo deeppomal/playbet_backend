@@ -26,7 +26,7 @@ mongoose.connect(process.env.DB_URL)
 const db = mongoose.connection
 
 db.on("error",error => console.log(error))
-db.on("open",() => console.log('connected to DB'))
+db.on("open")
 
 // app.use(session({
 //     secret: 'SECRET',
@@ -42,4 +42,4 @@ app.get('/',(req,res) => {
 })
 
 require('./cron-ping')();
-app.listen(4000,()=>console.log('server started'))
+app.listen(4000)
