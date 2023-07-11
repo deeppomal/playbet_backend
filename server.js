@@ -41,7 +41,8 @@ app.get('/',(req,res) => {
     res.send('Hello mom')
 })
 
-require('./cron-ping')();
+
 require('./cron-serverhit')();
+require('./cron-ping')();
 
 app.listen(4000,()=>console.log('server started'))
