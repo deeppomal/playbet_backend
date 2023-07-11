@@ -5,7 +5,7 @@ require('dotenv').config()
 const fetchAllBets = () => {
     const options = {
         method: 'GET',
-        url: 'http://localhost:4000/bet/get-all-bets',
+        url: 'https://playbet-backend-ptwt.onrender.com/bet/get-all-bets',
     };
     try{
         axios.request(options).then((response) => {
@@ -45,7 +45,7 @@ const checkIFBetWon = async (list,bet) => {
 }
 const updateBet = async (bet,result) => {
     try {
-        const response = await axios.patch('http://localhost:4000/bet/update-bet/'+bet._id, {
+        const response = await axios.patch('https://playbet-backend-ptwt.onrender.com/bet/update-bet/'+bet._id, {
             isResultChecked : true,
             hasWon : result,
             amountWon : result ? bet.expectedReturn : 0
@@ -56,7 +56,7 @@ const updateBet = async (bet,result) => {
 }
 const updateUser = async (bet) => {
     try {
-        const response = await axios.patch('http://localhost:4000/auth/update-user/'+bet.userId, {balance :bet.expectedReturn});
+        const response = await axios.patch('https://playbet-backend-ptwt.onrender.com/auth/update-user/'+bet.userId, {balance :bet.expectedReturn});
     } catch (error) {
         console.error(error);
     }
@@ -73,7 +73,7 @@ const checkWinner = (list) => {
     }
 }
 module.exports = () => {  
-    cron.schedule('0 19 * * *', function() {
+    cron.schedule('5 19 * * *', function() {
         fetchAllBets()
     });    
 }

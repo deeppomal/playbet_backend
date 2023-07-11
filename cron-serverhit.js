@@ -6,7 +6,7 @@ module.exports = () => {
     cronHit.schedule('*/2 * * * *', function() {
         const options = {
             method: 'GET',
-            url: 'http://localhost:4000/bet/get-all-bets',
+            url: 'https://playbet-backend-ptwt.onrender.com/bet/get-all-bets',
         };
         try{
             axios.request(options).then((response) => {
