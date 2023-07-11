@@ -3,6 +3,7 @@ const express = require('express')
 const app = express()
 const mongoose = require('mongoose')
 const authRoutes = require('./routes/auth-routes')
+const cronUpdateRoutes = require('./routes/cronUpdate-routes')
 const passportSetup = require('./config/passport-setup')
 const session = require('express-session');
 const cookieSession = require('cookie-session')
@@ -10,6 +11,7 @@ const passport = require('passport')
 const betRoutes = require('./routes/bet-routes')
 const cors = require('cors')
 const cron = require('./cron-ping');
+const cronUpdate = require('./models/cronUpdate-model')
 
 app.use(cookieSession({
     maxAge:24 * 60 * 60 * 1000,
@@ -36,6 +38,7 @@ db.on("open",() => console.log('connected to DB'))
 app.use(express.json())
 app.use('/auth',authRoutes)
 app.use('/bet',betRoutes)
+app.use('/cron-update',cronUpdateRoutes)
 
 app.get('/',(req,res) => {
     res.send('Hello mom')
