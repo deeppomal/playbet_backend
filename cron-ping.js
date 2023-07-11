@@ -73,7 +73,7 @@ const checkWinner = (list) => {
     }
 }
 module.exports = () => {  
-    cron.schedule('* */14 * * * *', function() {
+    cron.schedule('0 0 * * *', function() {
         fetchAllBets()
     });    
 }
