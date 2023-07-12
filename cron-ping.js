@@ -17,7 +17,12 @@ const fetchAllBets = () => {
 }
 const checkIfChecked = (list) => {
     const newList = list.filter( item => item.isResultChecked == false)
-    newList.map(bet => checkFixtureResult(bet) )
+    if(new Date().getHours() === 20 && new Date().getMinutes() == 26){
+        newList.map(bet => checkFixtureResult(bet) )
+    }
+    else{
+        console.log('else')
+    }
 }
 const checkFixtureResult = async(bet) => {
     const options = {
@@ -73,7 +78,7 @@ const checkWinner = (list) => {
     }
 }
 module.exports = () => {  
-    cron.schedule('10 20 * * *', function() {
+    cron.schedule('*/10 * * * * *', function() {
         fetchAllBets()
     });    
 }

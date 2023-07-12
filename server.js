@@ -45,7 +45,7 @@ app.get('/',(req,res) => {
 })
 
 
-require('./cron-serverhit')();
+// require('./cron-serverhit')();
 require('./cron-ping')();
 
 app.listen(4000,()=>console.log('server started'))
