@@ -10,6 +10,7 @@ module.exports = () => {
         };
         try{
             let res = await axios.request(options)
+            console.log(res?.data?.length)
         }catch (err){
             console.log('err',err)
         }
