@@ -17,11 +17,11 @@ const fetchAllBets = () => {
 }
 const checkIfChecked = (list) => {
     const newList = list.filter( item => item.isResultChecked == false)
-    if(new Date().getHours() === 20 && new Date().getMinutes() == 26){
+    if(new Date().getHours() == 20 && new Date().getMinutes() == 34){
         newList.map(bet => checkFixtureResult(bet) )
     }
     else{
-        console.log('else')
+        console.log('else',new Date().getHours(), new Date().getMinutes(), new Date().getHours() == 20,new Date().getMinutes() == 34)
     }
 }
 const checkFixtureResult = async(bet) => {
