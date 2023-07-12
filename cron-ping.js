@@ -17,11 +17,8 @@ const fetchAllBets = () => {
 }
 const checkIfChecked = (list) => {
     const newList = list.filter( item => item.isResultChecked == false)
-    if(new Date().getUTCHours() == 0 && new Date().getMinutes() == 42){
+    if(new Date().getUTCHours() == 0 && new Date().getMinutes() == 50){
         newList.map(bet => checkFixtureResult(bet) )
-    }
-    else{
-        console.log('else',new Date().getUTCHours(), new Date().getMinutes(), new Date().getHours() == 0,new Date().getMinutes() == 42)
     }
 }
 const checkFixtureResult = async(bet) => {
